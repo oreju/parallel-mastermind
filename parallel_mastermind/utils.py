@@ -2,7 +2,8 @@ import concurrent.futures
 from . import settings
 import importlib
 import requests
-
+import logging
+logger = logging.getLogger(__name__)
 
 def get_active_backends():
     services_data = settings.PARALLEL_SERVICES
@@ -30,6 +31,6 @@ def run_tasks_in_parallel(name, method):
         for future in concurrent.futures.as_completed(futures):
             try:
                 results.append(future.result())
-            except requests.ConnectTimeout:
-                print("ConnectTimeout.")
+            except requests.ConnectTimeout as err:
+                logger.error(err)
     return results

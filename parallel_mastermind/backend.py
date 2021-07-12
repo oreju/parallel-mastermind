@@ -17,17 +17,26 @@ class ServiceBackend:
         self.database_parameters = {}
 
     def get_request(self, url, headers={}):
+        errors = []
         try:
             r = requests.get(url, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as errh:
-            print("Http Error:", errh)
+            errors.append(errh)
+            logger.error(errh)
         except requests.exceptions.ConnectionError as errc:
-            print("Error Connecting:", errc)
+            errors.append(errc)
+            logger.error(errc)
         except requests.exceptions.Timeout as errt:
-            print("Timeout Error:", errt)
+            errors.append(errt)
+            logger.error(errt)
         except requests.exceptions.RequestException as err:
-            print("OOps: Something Else", err)
+            errors.append(err)
+            logger.error(err)
+
+        if errors:
+            return errors
+
         return json.loads(r.content.decode('utf-8'))
 
     # TODO: These methods could be used in the future.
