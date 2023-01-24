@@ -1,9 +1,9 @@
 Parallel MasterMind
 =======================
 
-Parallel MasterMind is a project created for technical task.
+Parallel MasterMind is a demo project.
 
-Technical Task Description
+Task Description
 -----------------------------
 Given a list of APIs URLs (or database connections for simplicity,
 but ideally it would be hidden behind some interface) make the query
